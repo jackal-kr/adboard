@@ -1,4 +1,9 @@
 <?php
+/**
+ * @package     Adboard
+ * @copyright   Copyright (C) 2026 Oleksiy Degtyar. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE
+ */
 \defined('_JEXEC') or die;
 
 // Resolve the primary site menu item for com_adboard so admin preview links

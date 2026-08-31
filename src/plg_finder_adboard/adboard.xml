@@ -6,6 +6,7 @@
     <authorUrl>https://dojazdowdzialki.pl</authorUrl>
     <creationDate>2026-05-30</creationDate>
     <version>1.5.2</version>
+    <license>GNU General Public License version 2 or later</license>
     <description>PLG_FINDER_ADBOARD_XML_DESCRIPTION</description>
     <files>
         <filename plugin="adboard">adboard.php</filename>

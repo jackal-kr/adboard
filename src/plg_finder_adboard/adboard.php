@@ -1,5 +1,10 @@
 <?php
 /**
+ * @package     Adboard
+ * @copyright   Copyright (C) 2026 Oleksiy Degtyar. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE
+ */
+/**
  * Ad Board Smart Search (Finder) plugin — single-file, Joomla 4/5/6 compatible.
  *
  * After installation:

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="package" method="upgrade">
-    <name>Ad Board — Full Package</name>
+    <name>Ad Board</name>
     <packagename>adboard</packagename>
     <author>Oleksiy Degtyar</author>
     <authorEmail>oleksiy.degtyar@gmail.com</authorEmail>
     <authorUrl>https://dojazdowdzialki.pl</authorUrl>
     <creationDate>2026-05-30</creationDate>
     <version>1.5.26</version>
+    <license>GNU General Public License version 2 or later</license>
     <description>Installs the Ad Board component and its Smart Search (Finder) plugin together.</description>
 
     <files>
@@ -16,4 +17,7 @@
         <!-- Finder plugin is installed second; enable it in Plugins then run Smart Search → Index -->
         <file type="plugin" id="adboard" group="finder">plg_finder_adboard.zip</file>
     </files>
+    <updateservers>
+        <server type="extension" name="Ad Board Update Site">https://raw.githubusercontent.com/jackal-kr/adboard/main/updates/pkg_adboard.xml</server>
+    </updateservers>
 </extension>

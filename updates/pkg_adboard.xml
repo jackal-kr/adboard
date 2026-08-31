@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Joomla Update System stream for the Ad Board package.
+  Host this file at a STABLE public URL and point the manifest's
+  <updateservers> at it (see pkg_adboard.xml). GitHub raw is fine:
+    https://raw.githubusercontent.com/jackal-kr/adboard/main/updates/pkg_adboard.xml
+  Add a new <update> block for every release (highest version wins).
+-->
+<updates>
+  <update>
+    <name>Ad Board</name>
+    <description>Moderated classifieds for Joomla</description>
+    <element>pkg_adboard</element>
+    <type>package</type>
+    <version>1.5.26</version>
+    <infourl title="Ad Board">https://github.com/jackal-kr/adboard</infourl>
+    <downloads>
+      <downloadurl type="full" format="zip">https://github.com/jackal-kr/adboard/releases/download/v1.5.26/pkg_adboard_v1.5.26.zip</downloadurl>
+    </downloads>
+    <tags>
+      <tag>stable</tag>
+    </tags>
+    <maintainer>Oleksiy Degtyar</maintainer>
+    <maintainerurl>https://dojazdowdzialki.pl</maintainerurl>
+    <!-- Joomla version this release supports; regex matched against the running version.
+         6.[01] = Joomla 6.0 and 6.1. Widen to 6.\d+ if you support all 6.x. -->
+    <targetplatform name="joomla" version="6.[01]"/>
+    <php_minimum>8.2</php_minimum>
+  </update>
+</updates>
