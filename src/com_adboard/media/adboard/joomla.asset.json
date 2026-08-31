@@ -1,0 +1,45 @@
+{
+    "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "com_adboard",
+    "version": "1.5.18",
+    "description": "Ad Board component assets",
+    "assets": [
+        {
+            "name": "com_adboard.css",
+            "type": "style",
+            "uri": "com_adboard/css/adboard.css"
+        },
+        {
+            "name": "com_adboard.image-picker",
+            "type": "script",
+            "uri": "com_adboard/js/image-picker.js",
+            "dependencies": [
+                "com_adboard.css"
+            ]
+        },
+        {
+            "name": "com_adboard.admin-image-picker",
+            "type": "script",
+            "uri": "com_adboard/js/admin-image-picker.js",
+            "dependencies": [
+                "com_adboard.css"
+            ]
+        },
+        {
+            "name": "com_adboard.gallery",
+            "type": "script",
+            "uri": "com_adboard/js/gallery.js",
+            "dependencies": [
+                "com_adboard.css"
+            ]
+        },
+        {
+            "name": "com_adboard.listing",
+            "type": "script",
+            "uri": "com_adboard/js/listing.js",
+            "attributes": {
+                "defer": true
+            }
+        }
+    ]
+}

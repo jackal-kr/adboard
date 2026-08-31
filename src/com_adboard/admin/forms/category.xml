@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    One row = one ad category.
+
+    slug        : internal key stored in #__adboard.category (e.g. "category1").
+                  Never change this after ads have been submitted.
+    title       : default / English title — used for any language without a
+                  dedicated field.
+    title_pl_PL : Polish title override.
+
+    To support additional languages add a field following the same pattern:
+        name="title_{lang_tag_underscored}"  e.g. title_de_DE, title_fr_FR
+    The component picks the matching field for the active site language,
+    and falls back to "title" when no match is found.
+-->
+<form>
+    <field name="slug"
+           type="text"
+           label="COM_ADBOARD_CAT_SLUG"
+           description="COM_ADBOARD_CAT_SLUG_DESC"
+           required="true"
+           filter="cmd"
+           size="14"
+           hint="e.g. items" />
+
+    <field name="title"
+           type="text"
+           label="COM_ADBOARD_CAT_TITLE_DEFAULT"
+           description="COM_ADBOARD_CAT_TITLE_DEFAULT_DESC"
+           required="true"
+           size="22"
+           hint="e.g. Items" />
+
+    <field name="title_pl_PL"
+           type="text"
+           label="COM_ADBOARD_CAT_TITLE_PL"
+           size="22"
+           hint="e.g. Przedmioty" />
+</form>

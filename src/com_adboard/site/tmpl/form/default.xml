@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    This file makes "Ad Board — Post an Ad" appear as a selectable menu item
+    type in Joomla's Menu Item Type picker.
+-->
+<metadata>
+    <layout title="COM_ADBOARD_MENU_FORM_TITLE" option="COM_ADBOARD">
+        <message><![CDATA[COM_ADBOARD_MENU_FORM_DESC]]></message>
+    </layout>
+</metadata>

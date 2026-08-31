@@ -1,0 +1,29 @@
+# OPTIONAL — zero-copy live editing via bind mounts.
+#
+# Use this INSTEAD of dev-deploy.sh if you prefer edits to appear with no sync
+# step. Trade-off: a bind mount replaces the whole target directory, so you
+# must still do the FIRST install from the package zip (for script.php side
+# effects) and then mount over the installed locations.
+#
+# How to use:
+#   1. Ensure the service name below matches your existing compose (default: joomla).
+#   2. Point ../src paths at this repo (they are relative to this file's dir).
+#   3. Run:  docker compose -f docker-compose.yml -f docker/docker-compose.override.yml up -d
+#      (adjust the base compose path/name to yours)
+#
+# NOTE: adboard.xml and script.php live at the component ROOT in source but at
+# administrator/components/com_adboard after install. The admin mount below does
+# NOT include them, so Joomla's copies from the initial zip install remain in
+# place. That is fine for day-to-day PHP/tmpl work; when you change the manifest
+# or install script, rebuild and reinstall the zip.
+
+services:
+  joomla:                       # ← rename to match your existing Joomla service
+    volumes:
+      - ../src/com_adboard/admin:/var/www/html/administrator/components/com_adboard/admin_src:ro
+      - ../src/com_adboard/site:/var/www/html/components/com_adboard:ro
+      - ../src/com_adboard/media/adboard:/var/www/html/media/com_adboard:ro
+      - ../src/plg_finder_adboard:/var/www/html/plugins/finder/adboard:ro
+
+# If you want the admin panel live too, the reliable route is dev-deploy.sh
+# rather than a mount, because of the manifest/script split described above.

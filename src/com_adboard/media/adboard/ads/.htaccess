@@ -1,0 +1,7 @@
+# Block script execution in the image upload directory.
+# Files here are served as static images only — PHP/CGI must never execute.
+<FilesMatch "\.(php|php\d*|phtml|pl|py|cgi|sh|bash)$">
+    Require all denied
+</FilesMatch>
+php_flag engine off
+Options -Indexes -ExecCGI

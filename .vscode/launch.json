@@ -1,0 +1,32 @@
+{
+  // Step-debugging Ad Board inside the Joomla container.
+  //
+  // Prereqs:
+  //   • Xdebug installed & enabled in the Joomla container (see README → Debugging).
+  //   • VS Code extension "PHP Debug" (xdebug.php-debug).
+  //   • Xdebug configured with:  xdebug.mode=debug  xdebug.client_host=host.docker.internal
+  //     xdebug.start_with_request=trigger   (append ?XDEBUG_TRIGGER=1, or use a browser toggle)
+  //
+  // The pathMappings translate the file paths Xdebug reports (the INSTALLED
+  // locations inside the container) back to the source in this repo, so
+  // breakpoints bind to the files you actually edit.
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Listen for Xdebug (Ad Board)",
+      "type": "php",
+      "request": "launch",
+      "port": 9003,
+      "pathMappings": {
+        "/var/www/html/administrator/components/com_adboard": "${workspaceFolder}/src/com_adboard/admin",
+        "/var/www/html/components/com_adboard": "${workspaceFolder}/src/com_adboard/site",
+        "/var/www/html/media/com_adboard": "${workspaceFolder}/src/com_adboard/media/adboard",
+        "/var/www/html/plugins/finder/adboard": "${workspaceFolder}/src/plg_finder_adboard"
+      },
+      "xdebugSettings": {
+        "max_children": 256,
+        "max_depth": 6
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "AdBoard: Build package",
+      "type": "shell",
+      "command": "./build/build.sh",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "shared" }
+    },
+    {
+      "label": "AdBoard: Deploy to Joomla container",
+      "type": "shell",
+      "command": "./docker/dev-deploy.sh",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "detail": "Syncs src/ into the running container. Set JOOMLA_CONTAINER/JOOMLA_ROOT in a .env if yours differ."
+    }
+  ]
+}

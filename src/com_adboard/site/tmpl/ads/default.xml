@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    This file makes "Ad Board — Listings" appear as a selectable menu item
+    type in Joomla's Menu Item Type picker (admin → Menus → New Item).
+
+    Joomla discovers it by scanning site/tmpl/{view}/*.xml.
+    The `title` and `option` attributes are language keys resolved from the
+    component's language files.
+-->
+<metadata>
+    <layout title="COM_ADBOARD_MENU_ADS_TITLE" option="COM_ADBOARD">
+        <message><![CDATA[COM_ADBOARD_MENU_ADS_DESC]]></message>
+    </layout>
+</metadata>

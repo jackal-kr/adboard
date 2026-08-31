@@ -1,0 +1,27 @@
+# Build artifacts — regenerate with ./build/build.sh
+/dist/
+*.zip
+
+# Local env / secrets
+.env
+*.local
+
+# Docker local overrides you don't want to share
+docker/*.local.yml
+
+# Editor / OS
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# VS Code: keep launch.json + tasks (shared debug config), ignore the rest
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/extensions.json
+
+# Uploaded ad images if a local Joomla tree ever lands in the repo
+media/com_adboard/ads/*
+!media/com_adboard/ads/index.html
+!media/com_adboard/ads/.htaccess

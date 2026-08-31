@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="package" method="upgrade">
+    <name>Ad Board — Full Package</name>
+    <packagename>adboard</packagename>
+    <author>Oleksiy Degtyar</author>
+    <authorEmail>oleksiy.degtyar@gmail.com</authorEmail>
+    <authorUrl>https://dojazdowdzialki.pl</authorUrl>
+    <creationDate>2026-05-30</creationDate>
+    <version>1.5.26</version>
+    <description>Installs the Ad Board component and its Smart Search (Finder) plugin together.</description>
+
+    <files>
+        <!-- Component is installed first. Filenames are versionless so build.sh
+             never has to keep this manifest in sync with a version bump. -->
+        <file type="component" id="com_adboard">com_adboard.zip</file>
+        <!-- Finder plugin is installed second; enable it in Plugins then run Smart Search → Index -->
+        <file type="plugin" id="adboard" group="finder">plg_finder_adboard.zip</file>
+    </files>
+</extension>

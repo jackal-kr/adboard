@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" method="upgrade">
+    <name>COM_ADBOARD</name>
+    <author>Oleksiy Degtyar</author>
+    <authorEmail>oleksiy.degtyar@gmail.com</authorEmail>
+    <authorUrl>https://dojazdowdzialki.pl</authorUrl>
+    <!-- Override the Options-page Help button URL.
+         Stored in manifest_cache by the Joomla installer.
+         Read by com_config to build the Help toolbar button. -->
+    <helplink>index.php?option=com_adboard&amp;view=help&amp;tmpl=component</helplink>
+    <copyright>Copyright (C) 2026 SOD Dojazdów. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later</license>
+    <creationDate>2026-05-30</creationDate>
+    <version>1.5.26</version>
+    <description>COM_ADBOARD_XML_DESCRIPTION</description>
+
+    <namespace path="src">Joomla\Component\Adboard</namespace>
+
+    <scriptfile>script.php</scriptfile>
+
+    <install>
+        <sql>
+            <file driver="mysql" charset="utf8mb4">sql/install.mysql.sql</file>
+        </sql>
+    </install>
+    <uninstall>
+        <sql>
+            <file driver="mysql" charset="utf8mb4">sql/uninstall.mysql.sql</file>
+        </sql>
+    </uninstall>
+
+    <update>
+        <schemas>
+            <schemapath type="mysql">sql/updates/mysql</schemapath>
+        </schemas>
+    </update>
+
+    <!-- ── Site (frontend) ─────────────────────────────────────────────── -->
+    <files folder="site">
+        <folder>services</folder>
+        <folder>src</folder>
+        <folder>tmpl</folder>
+    </files>
+
+    <languages folder="site/language">
+        <language tag="en-GB">en-GB/com_adboard.ini</language>
+        <language tag="pl-PL">pl-PL/com_adboard.ini</language>
+    </languages>
+
+    <!-- ── Administration (backend) ────────────────────────────────────── -->
+    <administration>
+        <menu link="option=com_adboard" img="class:list-2">COM_ADBOARD</menu>
+        <files folder="admin">
+            <folder>services</folder>
+            <folder>src</folder>
+            <folder>tmpl</folder>
+            <folder>forms</folder>
+            <folder>sql</folder>
+            <file>access.xml</file>
+            <file>config.xml</file>
+        </files>
+        <languages folder="admin/language">
+            <language tag="en-GB">en-GB/com_adboard.ini</language>
+            <language tag="en-GB">en-GB/com_adboard.sys.ini</language>
+            <language tag="pl-PL">pl-PL/com_adboard.ini</language>
+            <language tag="pl-PL">pl-PL/com_adboard.sys.ini</language>
+        </languages>
+    </administration>
+
+    <!-- ── Media (uploaded ad images + component JS) ───────────────────── -->
+    <media folder="media/adboard" destination="com_adboard">
+        <folder>ads</folder>
+        <folder>css</folder>
+        <folder>js</folder>
+        <file>joomla.asset.json</file>
+    </media>
+
+</extension>

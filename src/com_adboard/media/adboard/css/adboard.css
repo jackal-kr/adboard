@@ -1,0 +1,217 @@
+/*
+ * AdBoard component styles
+ * Loaded on: site form, admin ad-edit, site ad-detail, site ad-listing
+ */
+
+/* ── Image picker — shared (site form + admin edit) ─────────────────────── */
+
+/* Thumbnail strip wrapper */
+#ab-previews,
+#ab-existing-thumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-height: 20px;
+    margin-bottom: 10px;
+}
+
+/* Individual thumbnail tile */
+.ab-preview,
+.ab-exist-thumb,
+.ab-new-preview {
+    position: relative;
+    width: 82px;
+    height: 82px;
+    flex-shrink: 0;
+}
+
+.ab-preview img,
+.ab-exist-thumb img,
+.ab-new-preview img {
+    width: 82px;
+    height: 82px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 2px solid #dee2e6;
+    display: block;
+    background: #f8f9fa;
+}
+
+/* Cover image: first tile gets a blue border */
+.ab-preview:first-child > img {
+    border-color: #0d6efd;
+}
+
+/* Remove button (×) — top-right corner of each tile */
+.ab-preview__remove,
+.ab-exist-remove {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: rgba(220, 53, 69, 0.88);
+    color: #fff;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
+    cursor: pointer;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ab-preview__remove:hover,
+.ab-exist-remove:hover {
+    background: #dc3545;
+}
+
+/* Cover badge — bottom of the first tile */
+.ab-preview__cover,
+.ab-cover-badge {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(13, 110, 253, 0.82);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    text-align: center;
+    padding: 2px 0;
+    border-radius: 0 0 4px 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* ── Gallery thumbnails (site ad-detail) ─────────────────────────────────── */
+
+.ab-thumb {
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    transition: border-color 0.15s, opacity 0.15s;
+    opacity: 0.75;
+    display: block;
+}
+.ab-thumb--active,
+.ab-thumb:hover {
+    border-color: #0d6efd;
+    opacity: 1;
+}
+
+/* ── Filter bar — Clear button ───────────────────────────────────────────── */
+
+/*
+ * Cassiopeia (and some other Joomla front-end templates) override Bootstrap's
+ * --bs-secondary to a near-white value, making btn-secondary invisible on a
+ * white page background. This class gives the active Clear button an explicit
+ * mid-grey that is legible in any front-end template.
+ */
+.ab-btn-clear {
+    background-color: #6c757d;
+    border-color:     #6c757d;
+    color:            #fff;
+}
+.ab-btn-clear:hover,
+.ab-btn-clear:focus {
+    background-color: #5a6268;
+    border-color:     #545b62;
+    color:            #fff;
+}
+
+/* ── Admin Options — custom field tables (.ab-options-table) ─────────────
+ * Used by CategoriesTableField and ExpiryDaysTableField.
+ * Loaded via Factory::getDocument()->addStyleSheet() from each field class
+ * so this file is the single source of truth — no inline <style> needed.
+ * ─────────────────────────────────────────────────────────────────────── */
+.ab-options-table table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0 2px;
+}
+.ab-options-table thead tr {
+    background: var(--bs-tertiary-bg, #f8f9fa);
+}
+.ab-options-table th {
+    padding: 8px 10px;
+    font-size: .82rem;
+    font-weight: 600;
+    color: var(--bs-secondary-color, #6c757d);
+    border-bottom: 2px solid var(--bs-border-color, #dee2e6);
+}
+.ab-options-table td {
+    padding: 4px 6px;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--bs-border-color, #dee2e6);
+}
+.ab-options-table input.form-control {
+    width: 100%;
+    height: 32px;
+    padding: 4px 8px;
+    font-size: .9rem;
+}
+
+/* ── Image picker — drag-and-drop reordering ─────────────────────────────
+ * Applied to both the site picker (.ab-preview) and the admin picker
+ * (.ab-exist-thumb) tiles during a drag operation.
+ * ─────────────────────────────────────────────────────────────────────── */
+
+/* Tile being dragged */
+.ab-preview.ab-dragging,
+.ab-exist-thumb.ab-dragging {
+    opacity: .4;
+    outline: 2px dashed var(--bs-primary, #0d6efd);
+}
+
+/* Valid drop target while hovering */
+.ab-preview.ab-drag-over,
+.ab-exist-thumb.ab-drag-over {
+    outline: 3px solid var(--bs-primary, #0d6efd);
+    outline-offset: 2px;
+}
+
+/* Drag hint shown on hover when the strip has more than one tile */
+.ab-previews-has-multiple .ab-preview::after,
+.ab-existing-thumbs-has-multiple .ab-exist-thumb::after {
+    content: '⠿';
+    position: absolute;
+    top: 2px;
+    left: 4px;
+    font-size: .75rem;
+    color: rgba(255,255,255,.7);
+    pointer-events: none;
+}
+
+
+/* ── Listing page — compact secondary-controls dropdowns ────────────────────
+ * .ab-select-compact constrains the sort and per-page selects in the
+ * secondary controls row to their content width without growing to fill
+ * the available column space.
+ * ─────────────────────────────────────────────────────────────────────── */
+.ab-select-compact { width: auto; min-width: 0; }
+
+/* ── Admin toolbar — Unpublish button amber colour ──────────────────────────
+ * Matches the Pending badge (bg-warning / #ffc107) so moderators see a clear
+ * visual link: clicking Unpublish → ad moves to Pending state (same colour).
+ *
+ * Targeting #toolbar-unpublish is reliable: Joomla 6 renders
+ * ToolbarHelper::unpublishList() wrapped in <div id="toolbar-unpublish">.
+ * ─────────────────────────────────────────────────────────────────────── */
+#toolbar-unpublish button,
+#toolbar-unpublish .btn {
+    background-color: #ffc107 !important;
+    border-color:     #ffc107 !important;
+    color:            #000    !important;
+}
+#toolbar-unpublish button:hover,
+#toolbar-unpublish .btn:hover {
+    background-color: #e0a800 !important;
+    border-color:     #d39e00 !important;
+}

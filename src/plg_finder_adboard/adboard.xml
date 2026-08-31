@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="finder" method="upgrade">
+    <name>PLG_FINDER_ADBOARD</name>
+    <author>Oleksiy Degtyar</author>
+    <authorEmail>oleksiy.degtyar@gmail.com</authorEmail>
+    <authorUrl>https://dojazdowdzialki.pl</authorUrl>
+    <creationDate>2026-05-30</creationDate>
+    <version>1.5.2</version>
+    <description>PLG_FINDER_ADBOARD_XML_DESCRIPTION</description>
+    <files>
+        <filename plugin="adboard">adboard.php</filename>
+    </files>
+    <languages>
+        <language tag="en-GB">language/en-GB/plg_finder_adboard.ini</language>
+        <language tag="en-GB">language/en-GB/plg_finder_adboard.sys.ini</language>
+        <language tag="pl-PL">language/pl-PL/plg_finder_adboard.ini</language>
+        <language tag="pl-PL">language/pl-PL/plg_finder_adboard.sys.ini</language>
+    </languages>
+    <config/>
+</extension>

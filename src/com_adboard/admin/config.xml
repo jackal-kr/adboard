@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+
+    <!-- Override the Options-page Help button URL.
+         com_config reads this element and uses it instead of the default
+         Joomla.org help URL, which returns an error for custom extensions. -->
+    <help url="index.php?option=com_adboard&amp;view=help&amp;tmpl=component"/>
+
+
+    <!-- General tab -->
+    <fieldset name="general" label="COM_ADBOARD_CONFIG_TAB_GENERAL">
+
+        <!-- Hidden field: keeps the Help button pointing to our custom help page -->
+        <field name="helpURL"
+               type="hidden"
+               default="index.php?option=com_adboard&amp;view=help&amp;tmpl=component"/>
+
+        <!-- ── Submission section header ────────────────────── -->
+        <field name="submission_header"
+               type="note"
+               label="COM_ADBOARD_CONFIG_SECTION_SUBMISSION"
+               class="fw-bold border-bottom pb-1 mb-1 mt-1"/>
+
+        <field name="redirect_itemid"
+               type="menuitem"
+               label="COM_ADBOARD_CONFIG_REDIRECT_ITEMID"
+               description="COM_ADBOARD_CONFIG_REDIRECT_ITEMID_DESC"
+               default=""
+               first_option_text="COM_ADBOARD_CONFIG_REDIRECT_FORM" />
+
+        <!-- ── Notification section header ──────────────────── -->
+        <field name="notification_header"
+               type="note"
+               label="COM_ADBOARD_CONFIG_SECTION_NOTIFICATION"
+               class="fw-bold border-bottom pb-1 mb-1 mt-4"/>
+
+        <!-- FIX: option order must be 0 first, 1 second so Joomla's switcher
+             renders value=1 (enabled) as the green/ticked/ON state -->
+        <field name="email_notify"
+               type="radio"
+               layout="joomla.form.field.radio.switcher"
+               label="COM_ADBOARD_CONFIG_EMAIL_NOTIFY"
+               description="COM_ADBOARD_CONFIG_EMAIL_NOTIFY_DESC"
+               default="1"
+               filter="integer">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+
+    </fieldset>
+
+    <!-- Categories tab -->
+    <fieldset name="categories" label="COM_ADBOARD_CONFIG_TAB_CATEGORIES">
+        <field name="categories"
+               type="CategoriesTable"
+               addfieldprefix="Joomla\Component\Adboard\Administrator\Field"
+               label="" />
+    </fieldset>
+
+    <!-- Expiry terms tab -->
+    <fieldset name="expiry" label="COM_ADBOARD_CONFIG_TAB_EXPIRY">
+        <field name="expiry_days"
+               type="ExpiryDaysTable"
+               addfieldprefix="Joomla\Component\Adboard\Administrator\Field"
+               label="" />
+    </fieldset>
+
+    <!-- Security tab -->
+    <fieldset name="security" label="COM_ADBOARD_CONFIG_TAB_SECURITY">
+
+        <!-- ── Images section ───────────────────────────────────────── -->
+        <field name="security_images_header"
+               type="note"
+               label="COM_ADBOARD_CONFIG_SECTION_IMAGES"
+               class="fw-bold border-bottom pb-1 mb-1 mt-1"/>
+
+        <field name="max_image_size"
+               type="number"
+               label="COM_ADBOARD_CONFIG_MAX_IMAGE_SIZE"
+               description="COM_ADBOARD_CONFIG_MAX_IMAGE_SIZE_DESC"
+               default="5" min="1" max="50" filter="integer" />
+
+        <field name="max_images"
+               type="number"
+               label="COM_ADBOARD_CONFIG_MAX_IMAGES"
+               description="COM_ADBOARD_CONFIG_MAX_IMAGES_DESC"
+               default="5" min="1" max="20" filter="integer" />
+
+        <!-- ── Submission / rate limiting section ───────────────────── -->
+        <field name="security_session_header"
+               type="note"
+               label="COM_ADBOARD_CONFIG_SECTION_SUBMISSION_LIMITS"
+               class="fw-bold border-bottom pb-1 mb-1 mt-4"/>
+
+        <field name="rate_limit_max"
+               type="number"
+               label="COM_ADBOARD_CONFIG_RATE_LIMIT_MAX"
+               description="COM_ADBOARD_CONFIG_RATE_LIMIT_MAX_DESC"
+               default="3" min="1" max="100" filter="integer" />
+
+        <field name="rate_limit_window"
+               type="number"
+               label="COM_ADBOARD_CONFIG_RATE_LIMIT_WINDOW"
+               description="COM_ADBOARD_CONFIG_RATE_LIMIT_WINDOW_DESC"
+               default="60" min="1" max="1440" filter="integer" />
+
+    </fieldset>
+
+    <!-- Standard Joomla permissions tab — lets Super Users configure
+         per-group ACL rules for the component via Options → Permissions -->
+    <fieldset
+        name="permissions"
+        label="JCONFIG_PERMISSIONS_LABEL"
+        description="JCONFIG_PERMISSIONS_DESC">
+
+        <field
+            name="rules"
+            type="rules"
+            label="JCONFIG_PERMISSIONS_LABEL"
+            class="inputbox"
+            filter="rules"
+            component="com_adboard"
+            section="component"/>
+
+    </fieldset>
+
+</config>
