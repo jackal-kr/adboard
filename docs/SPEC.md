@@ -10,10 +10,8 @@
 ---
 
 ## 1. Purpose & Scope
-A moderated classifieds component for Joomla 6.1, built for the S.O.D. Dojazdów
-garden-plot association. Any site visitor can post an advertisement (plot for sale,
-plant exchange, tools, services) **without a Joomla account**. All submissions enter
-a moderation queue and are published only after an administrator or moderator approves.
+A moderated classifieds component for Joomla 6.1, built for a website of one
+garden-plot association (ROD) in Poland. Any site visitor can post an advertisement (plot for sale, plant exchange, tools, services) **without a Joomla account**. All submissions enter a moderation queue and are published only after an administrator or moderator approves.
 
 **Design goals:** zero-account submission · moderation-first (nothing public until
 approved) · multi-layer security (honeypot, IP rate limit, CAPTCHA, GD re-encode, CSRF)
