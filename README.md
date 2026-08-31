@@ -1,7 +1,6 @@
 # Ad Board — `com_adboard`
 
-Moderated classifieds component for **Joomla 6.1** (S.O.D. Dojazdów garden-plot
-association), packaged with a Smart Search (Finder) plugin. See
+Moderated classifieds component for **Joomla 6.1**, packaged with a Smart Search (Finder) plugin. See
 [`docs/SPEC.md`](docs/SPEC.md) for behaviour and [`CLAUDE.md`](CLAUDE.md) for
 development guardrails.
 
