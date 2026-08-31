@@ -25,12 +25,25 @@ class HtmlView extends BaseHtmlView
         $doc->addStyleSheet($base . 'media/com_adboard/css/adboard.css',   ['version' => 'auto']);
         $doc->addScript(    $base . 'media/com_adboard/js/image-picker.js', ['version' => 'auto']);
 
-        // Breadcrumb
-        $pathway = Factory::getApplication()->getPathway();
-        $pathway->addItem(
-            Text::_('COM_ADBOARD_ADS_TITLE'),
-            Route::_('index.php?option=com_adboard&view=ads')
-        );
+        // Breadcrumb — only add the "Advertisements" crumb if the active
+        // menu item isn't already that page (Joomla's own menu-derived
+        // breadcrumb covers that case). The form title crumb is always
+        // added, since no menu item represents this specific sub-page.
+        $app  = Factory::getApplication();
+        $menu = $app->getMenu()->getActive();
+        $isActiveMenuItem = $menu
+            && ($menu->query['option'] ?? null) === 'com_adboard'
+            && ($menu->query['view'] ?? null) === 'ads';
+
+        $pathway = $app->getPathway();
+
+        if (!$isActiveMenuItem) {
+            $pathway->addItem(
+                Text::_('COM_ADBOARD_ADS_TITLE'),
+                Route::_('index.php?option=com_adboard&view=ads')
+            );
+        }
+
         $pathway->addItem(Text::_('COM_ADBOARD_FORM_TITLE'));
 
         parent::display($tpl);

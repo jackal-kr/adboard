@@ -3,8 +3,8 @@
 
 [mysqld]
 # Character set — required by Joomla 4+
-character-set-server  = utf8mb4
-collation-server      = utf8mb4_unicode_ci
+character-set-server      = utf8mb4
+collation-server          = utf8mb4_unicode_ci
 
 # Performance tuning (adjust to your RAM)
 innodb_buffer_pool_size   = 128M

@@ -47,9 +47,18 @@ class HtmlView extends BaseHtmlView
         $title = Text::_('COM_ADBOARD_ADS_TITLE');
         $this->document->setTitle($title);
 
-        Factory::getApplication()
-            ->getPathway()
-            ->addItem($title, Route::_('index.php?option=com_adboard&view=ads'));
+        // Only add a breadcrumb for this view if the active menu item isn't
+        // already this exact page — otherwise Joomla's own menu-derived
+        // breadcrumb already covers it and we'd be duplicating it.
+        $app  = Factory::getApplication();
+        $menu = $app->getMenu()->getActive();
+        $isActiveMenuItem = $menu
+            && ($menu->query['option'] ?? null) === 'com_adboard'
+            && ($menu->query['view'] ?? null) === 'ads';
+
+        if (!$isActiveMenuItem) {
+            $app->getPathway()->addItem($title, Route::_('index.php?option=com_adboard&view=ads'));
+        }
 
         parent::display($tpl);
     }

@@ -54,12 +54,25 @@ class HtmlView extends BaseHtmlView
             $doc->addScript($base . 'media/com_adboard/js/gallery.js', ['version' => 'auto']);
         }
 
-        // Breadcrumb
-        $pathway = Factory::getApplication()->getPathway();
-        $pathway->addItem(
-            Text::_('COM_ADBOARD_ADS_TITLE'),
-            Route::_('index.php?option=com_adboard&view=ads')
-        );
+        // Breadcrumb — only add the "Advertisements" crumb if the active
+        // menu item isn't already that page (Joomla's own menu-derived
+        // breadcrumb covers that case). The ad title crumb is always added,
+        // since no menu item represents this specific sub-page.
+        $app  = Factory::getApplication();
+        $menu = $app->getMenu()->getActive();
+        $isActiveMenuItem = $menu
+            && ($menu->query['option'] ?? null) === 'com_adboard'
+            && ($menu->query['view'] ?? null) === 'ads';
+
+        $pathway = $app->getPathway();
+
+        if (!$isActiveMenuItem) {
+            $pathway->addItem(
+                Text::_('COM_ADBOARD_ADS_TITLE'),
+                Route::_('index.php?option=com_adboard&view=ads')
+            );
+        }
+
         $pathway->addItem(
             $this->escape($this->item->title),
             Route::_('index.php?option=com_adboard&view=ad&id=' . (int) $this->item->id)
