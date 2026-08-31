@@ -12,7 +12,7 @@ Search (Finder) plugin.
 - **Stack:** Joomla 6.1 / PHP 8.2+ (GD required) / MySQL 8 or MariaDB 10.4, utf8mb4.
 - **Namespace:** `Joomla\Component\Adboard` — with `Administrator\` and `Site\` sub-namespaces.
 - **Single table:** `#__adboard`. **No other tables.**
-- **Author/manifest identity:** Oleksiy Degtyar, `dojazdowdzialki.pl`.
+- **Author/manifest identity:** JOD, `dojazdowdzialki.pl`.
 
 ## Repository layout — source is the source of truth
 ```
@@ -134,3 +134,22 @@ default). `script.php::setDefaultPermissions()` grants Manager everything except
 5. Update `docs/SPEC.md` (behaviour + the Version History table).
 6. `./build/build.sh`, install the zip on a clean-ish Joomla, click through the
    affected view; if Finder-related, re-index.
+7. **Every new/edited `.php` file carries the GPLv2+ header** (JED rule PH1):
+   `@package Adboard` / `@copyright 2026 JOD` / `@license GNU General Public
+   License version 2 or later; see LICENSE`, placed right after `<?php`, before
+   `namespace`. The `_JEXEC` guard stays after `namespace`.
+8. **Keep the `<license>` tag in all three manifests** (`pkg_adboard.xml`,
+   `com_adboard/adboard.xml`, `plg_finder_adboard/adboard.xml`).
+
+## JED / release rules (Joomla Extensions Directory)
+- **Extension name has no version and matches the JED entry.** Public name is
+  **"Ad Board"**; the component resolves `COM_ADBOARD -> "Ad Board"` and the plugin
+  resolves `PLG_FINDER_ADBOARD -> "Smart Search - Ad Board"` (required `{Type} -
+  {Name}` plugin form). Don't reintroduce suffixes like "- Full Package".
+- **Update stream is auto-generated.** `build.sh` rewrites `updates/pkg_adboard.xml`
+  from `<version>` on every build - never hand-edit it. To release: bump the version
+  (step 4), `./build/build.sh`, create a GitHub release tagged `v<version>` with the
+  built zip attached, then commit `updates/pkg_adboard.xml`. The `<downloadurl>` must
+  resolve or the update check 404s.
+- **Run JED Checker** on the built zip before publishing; all rules green/yellow/blue,
+  none red. PH1 (headers) and PH2 (`_JEXEC`) must pass.

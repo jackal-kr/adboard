@@ -2,7 +2,7 @@
 <extension type="package" method="upgrade">
     <name>Ad Board</name>
     <packagename>adboard</packagename>
-    <author>Oleksiy Degtyar</author>
+    <author>JOD</author>
     <authorEmail>oleksiy.degtyar@gmail.com</authorEmail>
     <authorUrl>https://dojazdowdzialki.pl</authorUrl>
     <creationDate>2026-05-30</creationDate>

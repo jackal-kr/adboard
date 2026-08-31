@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" group="finder" method="upgrade">
     <name>PLG_FINDER_ADBOARD</name>
-    <author>Oleksiy Degtyar</author>
+    <author>JOD</author>
     <authorEmail>oleksiy.degtyar@gmail.com</authorEmail>
     <authorUrl>https://dojazdowdzialki.pl</authorUrl>
     <creationDate>2026-05-30</creationDate>

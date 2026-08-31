@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Adboard
- * @copyright   Copyright (C) 2026 Oleksiy Degtyar. All rights reserved.
+ * @copyright   Copyright (C) 2026 JOD. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 namespace Joomla\Component\Adboard\Site\View\Ads;
