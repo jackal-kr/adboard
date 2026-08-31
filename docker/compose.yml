@@ -1,0 +1,86 @@
+# compose.yml — Joomla 6.1 dev stack with Xdebug, shipped inside this repo.
+# Lives in docker/ alongside: Dockerfile.joomla php-custom.ini xdebug.ini
+#                             apache-custom.conf mysql-custom.cnf
+#
+# Run from the repo root (relative paths resolve to docker/):
+#   docker compose -f docker/compose.yml up -d --build     # first run / Dockerfile change
+#   docker compose -f docker/compose.yml start | stop      # daily driver
+#   docker compose -f docker/compose.yml down              # remove containers (keeps volumes)
+# Or use the VS Code tasks: Docker: Up (build) / Start / Stop / Down.
+#
+# URLs:  Joomla http://localhost:8080   ·   phpMyAdmin http://localhost:8081
+# (original daily notes)   docker compose start / stop
+# URLs:    Joomla http://localhost:8080   ·   phpMyAdmin http://localhost:8081
+
+name: adboard-dev
+
+services:
+
+  # ── Joomla + Xdebug ─────────────────────────────────────────────────────
+  joomla:
+    container_name: joomla_app
+    build:
+      context: .
+      dockerfile: Dockerfile.joomla        # builds joomla:6.1-php8.3-apache + Xdebug
+
+    # Lets the container reach VS Code on the host for Xdebug (required on Linux).
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+    ports:
+      - "8080:80"
+
+    environment:
+      JOOMLA_DB_HOST:     db
+      JOOMLA_DB_USER:     joomla
+      JOOMLA_DB_PASSWORD: secret
+      JOOMLA_DB_NAME:     joomla
+
+    volumes:
+      - joomla_data:/var/www/html
+      - ./php-custom.ini:/usr/local/etc/php/conf.d/99-custom.ini:ro
+      - ./apache-custom.conf:/etc/apache2/conf-enabled/99-custom.conf:ro
+
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # ── MariaDB ─────────────────────────────────────────────────────────────
+  db:
+    container_name: joomla_db
+    image: mariadb:11.4
+    environment:
+      MYSQL_DATABASE:      joomla
+      MYSQL_USER:          joomla
+      MYSQL_PASSWORD:      secret
+      MYSQL_ROOT_PASSWORD: rootsecret
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./mysql-custom.cnf:/etc/mysql/conf.d/99-custom.cnf:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # ── phpMyAdmin ──────────────────────────────────────────────────────────
+  phpmyadmin:
+    container_name: joomla_pma
+    image: phpmyadmin:latest
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST:           db
+      PMA_PORT:           3306
+      UPLOAD_LIMIT:       "64M"
+      MAX_EXECUTION_TIME: 300
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  joomla_data:
+  db_data:

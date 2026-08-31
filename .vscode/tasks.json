@@ -6,7 +6,7 @@
       "type": "shell",
       "command": "./build/build.sh",
       "problemMatcher": [],
-      "presentation": { "reveal": "always", "panel": "shared" }
+      "presentation": { "reveal": "always", "panel": "shared", "clear": true }
     },
     {
       "label": "AdBoard: Deploy to Joomla container",
@@ -14,7 +14,51 @@
       "command": "./docker/dev-deploy.sh",
       "problemMatcher": [],
       "presentation": { "reveal": "always", "panel": "shared" },
-      "detail": "Syncs src/ into the running container. Set JOOMLA_CONTAINER/JOOMLA_ROOT in a .env if yours differ."
+      "detail": "Syncs src/ into the running joomla_app container. Override JOOMLA_CONTAINER/JOOMLA_ROOT via env if yours differ."
+    },
+    {
+      "label": "AdBoard: Build + Deploy",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "AdBoard: Build package",
+        "AdBoard: Deploy to Joomla container"
+      ],
+      "problemMatcher": [],
+      "group": { "kind": "build", "isDefault": true },
+      "detail": "One-keypress daily loop: rebuild the package, then sync source into the running container. Ctrl+Shift+B."
+    },
+
+    {
+      "label": "Docker: Up (build)",
+      "type": "shell",
+      "command": "docker compose -f docker/compose.yml up -d --build",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "detail": "First run, or after changing the Dockerfile/compose. Builds the Xdebug image and starts all containers."
+    },
+    {
+      "label": "Docker: Start",
+      "type": "shell",
+      "command": "docker compose -f docker/compose.yml start",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "detail": "Resume the stack where you left off (keeps all data)."
+    },
+    {
+      "label": "Docker: Stop",
+      "type": "shell",
+      "command": "docker compose -f docker/compose.yml stop",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "detail": "Gracefully stop the stack (keeps all data)."
+    },
+    {
+      "label": "Docker: Down",
+      "type": "shell",
+      "command": "docker compose -f docker/compose.yml down",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "detail": "Stop AND remove containers (named volumes joomla_data/db_data are kept). Add -v to wipe data."
     }
   ]
 }

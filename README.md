@@ -23,27 +23,38 @@ docs/SPEC.md             Functional & technical spec
 Install via Joomla admin: **System → Install → Extensions → Upload Package File**.
 
 ## Local Joomla dev loop (Docker)
-This repo doesn't ship a Joomla stack — it plugs into yours.
+The dev stack ships **in this repo** under `docker/`: Joomla 6.1 + Xdebug
+(`Dockerfile.joomla`), MariaDB, phpMyAdmin, and the php/apache/mysql tuning files.
+Named volumes `joomla_data` / `db_data` hold the running site — they're Docker-managed,
+never committed. Compose project name is `adboard-dev`.
 
-1. **First install (required, once per environment):** build the zip and install it
-   through the Joomla installer. This runs `script.php` (creates `#__adboard`, seeds
-   categories/expiry, sets Manager ACL, registers the action-log config). File-sync
-   cannot do this.
-2. **Fast iteration:** after the first install, run
+Drive it from the repo root (or the VS Code **Docker: …** tasks):
+```bash
+docker compose -f docker/compose.yml up -d --build   # first run (builds Xdebug image)
+docker compose -f docker/compose.yml start           # daily: resume
+docker compose -f docker/compose.yml stop            # daily: pause
+docker compose -f docker/compose.yml down            # remove containers (keeps volumes)
+```
+Joomla → http://localhost:8080 · phpMyAdmin → http://localhost:8081
+
+Then:
+
+1. **Complete the Joomla web installer once** at http://localhost:8080 (site + admin account).
+2. **First extension install (required):** build the zip and install it through the Joomla
+   installer. This runs `script.php` (creates `#__adboard`, seeds categories/expiry, sets
+   Manager ACL, registers the action-log config). File-sync cannot do this.
+3. **Fast iteration:** after the first install, run **AdBoard: Build + Deploy** (Ctrl+Shift+B)
+   or:
    ```bash
-   ./docker/dev-deploy.sh
+   ./build/build.sh && ./docker/dev-deploy.sh
    ```
-   It stages the exact install layout and copies it into the running container.
-   PHP / templates / CSS / JS are live on the next page load. Configure it if your
-   container differs:
-   ```bash
-   JOOMLA_CONTAINER=my-joomla JOOMLA_ROOT=/var/www/html ./docker/dev-deploy.sh
-   ```
-   (or put those in a `.env` beside your compose).
-3. **Reinstall the zip** when you change SQL, a migration, `adboard.xml`, `config.xml`,
+   Deploy stages the exact install layout and copies it into the running `joomla_app`
+   container; PHP / templates / CSS / JS are live on the next page load. Override targets
+   if needed: `JOOMLA_CONTAINER=… JOOMLA_ROOT=… ./docker/dev-deploy.sh`.
+4. **Reinstall the zip** when you change SQL, a migration, `adboard.xml`, `config.xml`,
    or `script.php`.
-4. **Zero-copy alternative:** `docker/docker-compose.override.yml` bind-mounts the
-   source instead of copying — see the notes in that file.
+5. **Zero-copy alternative:** `docker/docker-compose.override.yml` bind-mounts the source
+   instead of copying — merge it with `-f docker/compose.yml -f docker/docker-compose.override.yml`.
 
 After anything Finder-related: **Components → Smart Search → Index** (re-index).
 

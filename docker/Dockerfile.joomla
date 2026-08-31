@@ -1,0 +1,26 @@
+# Dockerfile.joomla — Joomla 6.1 + Xdebug for local step-debugging.
+#
+# The official joomla:*-apache images do NOT ship Xdebug, so we compile it in
+# via PECL. Everything else (Apache, PHP, Joomla) comes from the base image.
+#
+# Build is triggered by the `build:` block in compose.yml — you don't run
+# docker build by hand.
+
+FROM joomla:6.1-php8.3-apache
+
+# Compile + enable Xdebug, then drop the build toolchain to keep the image lean.
+RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends $PHPIZE_DEPS; \
+    pecl install xdebug; \
+    docker-php-ext-enable xdebug; \
+    apt-get purge -y --auto-remove $PHPIZE_DEPS; \
+    rm -rf /var/lib/apt/lists/*; \
+    # Handy CLI tools inside the container (optional).
+    apt-get update; \
+    apt-get install -y --no-install-recommends micro nano curl wget unzip git; \
+    rm -rf /var/lib/apt/lists/*
+
+# Xdebug runtime config. Loaded after docker-php-ext-enable's loader (which
+# already adds `zend_extension=xdebug`), so this file carries settings only.
+COPY xdebug.ini /usr/local/etc/php/conf.d/99-xdebug.ini
