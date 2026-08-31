@@ -27,7 +27,7 @@
 #
 set -euo pipefail
 
-JOOMLA_CONTAINER="${JOOMLA_CONTAINER:-joomla}"
+JOOMLA_CONTAINER="${JOOMLA_CONTAINER:-joomla_app}"
 JOOMLA_ROOT="${JOOMLA_ROOT:-/var/www/html}"
 WEB_USER="${WEB_USER:-www-data}"
 
