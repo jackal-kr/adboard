@@ -16,7 +16,7 @@ Search (Finder) plugin.
 
 ## Repository layout — source is the source of truth
 ```
-src/com_adboard/         Unpacked component (admin/, site/, media/, sql/, adboard.xml, script.php)
+src/com_adboard/         Unpacked component (admin/ incl. sql/, site/, media/, adboard.xml, script.php)
 src/plg_finder_adboard/  Unpacked finder plugin (adboard.php, adboard.xml, language/)
 src/pkg_adboard.xml      Package manifest (references versionless inner zips)
 build/build.sh           Assembles src/ → dist/pkg_adboard_v<ver>.zip
@@ -110,6 +110,11 @@ default). `script.php::setDefaultPermissions()` grants Manager everything except
   using idempotent DDL (`... IF NOT EXISTS` / `DROP COLUMN IF EXISTS`). The installer
   runs pending files by stored schema version on upgrade. `script.php::ensureTable()`
   additionally uses `CREATE TABLE IF NOT EXISTS` so install AND update are both safe.
+- **All SQL lives under `admin/sql/`** (`install.mysql.sql`, `uninstall.mysql.sql`,
+  `updates/mysql/<version>.sql`). Joomla and JED Checker resolve the manifest's
+  `<install>`/`<uninstall>`/`<schemapath>` relative to the admin folder, so SQL must NOT
+  sit in a top-level `sql/` folder — JED Checker's `XMLFILES` rule flags it as a missing
+  file reference.
 - **Conditional column reads:** if a query depends on a column that may not exist yet,
   guard with `SHOW COLUMNS FROM` before building the SELECT — Joomla validates column
   names at `setQuery()` time, not at `execute()`.
@@ -126,7 +131,7 @@ default). `script.php::setDefaultPermissions()` grants Manager everything except
 ## Definition of done for any change
 1. Edit under `src/`; keep the security invariants above intact.
 2. Schema change → add `admin/sql/updates/mysql/<newversion>.sql` (idempotent) **and**
-   keep `sql/install.mysql.sql` + `script.php::ensureTable()` consistent.
+   keep `admin/sql/install.mysql.sql` + `script.php::ensureTable()` consistent.
 3. New string → add to **both** en-GB and pl-PL.
 4. Bump version in **all** the right places: `src/com_adboard/adboard.xml`,
    `src/pkg_adboard.xml`, `media/adboard/joomla.asset.json`, and the plugin's
