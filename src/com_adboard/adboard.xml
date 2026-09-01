@@ -4,10 +4,6 @@
     <author>JOD</author>
     <authorEmail>oleksiy.degtyar@gmail.com</authorEmail>
     <authorUrl>https://dojazdowdzialki.pl</authorUrl>
-    <!-- Override the Options-page Help button URL.
-         Stored in manifest_cache by the Joomla installer.
-         Read by com_config to build the Help toolbar button. -->
-    <helplink>index.php?option=com_adboard&amp;view=help&amp;tmpl=component</helplink>
     <copyright>Copyright (C) 2026 SOD Dojazdów. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later</license>
     <creationDate>2026-05-30</creationDate>

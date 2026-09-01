@@ -261,7 +261,7 @@ class Com_AdboardInstallerScript
             true
         ) ?? [];
 
-        $cache['helplink'] = $helpUrl;   // stored by installer from <helplink>
+        $cache['helplink'] = $helpUrl;   // set directly here (no <helplink> manifest tag needed)
 
         $db->setQuery(
             $db->getQuery(true)
