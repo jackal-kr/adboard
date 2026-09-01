@@ -187,6 +187,7 @@ the site form template swaps the label to "Nie jestem robotem" via an inline DOM
 ## 14. Version History (recent)
 | Version | Date | Changes |
 |---|---|---|
+| 1.5.27 | 2026-09-01 | JED prep: GPL headers, update stream, admin/sql relocation, language-quote fix; author → JOD |
 | 1.5.26 | 2026-05-30 | SEF router (`site/src/Service/Router.php`); `/ogloszenia/12`, `/ogloszenia/dodaj` |
 | 1.5.22 | 2026-05-30 | Full language-file descriptions for component + finder plugin |
 | 1.5.20 | 2026-05-30 | Security Options split into Images + Submission Limits |
@@ -197,3 +198,57 @@ the site form template swaps the label to "Nie jestem robotem" via an inline DOM
 | 1.5.1 | 2026-05-25 | Manager ACL defaults; Permissions tab |
 | 1.5.0 | 2026-05-25 | Finder plugin split into its own package entry |
 | 1.0–1.2 | 2026-05-22 | Initial build: form, moderation, help, pagination, Expired state |
+
+## 15. JED Compliance (Joomla Extensions Directory)
+
+Requirements for listing on the JED, and how Ad Board meets each. All checks below
+were validated by replicating the `joomla-extensions/jedchecker` rule logic against a
+built `pkg_adboard` package (result: 0 errors, 0 warnings on the rules listed).
+
+### 15.1 Joomla Update System
+- `src/pkg_adboard.xml` declares an `<updateservers>` block with one
+  `type="extension"` server pointing at
+  `https://raw.githubusercontent.com/jackal-kr/adboard/main/updates/pkg_adboard.xml`.
+- `updates/pkg_adboard.xml` is the update stream: `<element>pkg_adboard</element>`,
+  `<type>package</type>`, `<version>`, a `<downloadurl>` to the GitHub release asset,
+  `<targetplatform name="joomla" version="6.[01]"/>`, `<php_minimum>8.2</php_minimum>`.
+- `build/build.sh` **regenerates** the stream from the manifest version on every build,
+  so version and download URL can never drift. Never hand-edit `updates/pkg_adboard.xml`.
+- **Release ritual:** bump the version (§ Definition of done), `./build/build.sh`, create
+  a GitHub release tagged `v<version>` with the built zip attached, commit `updates/`.
+  The `<downloadurl>` must resolve (the release must exist) or the update check 404s.
+
+### 15.2 Extension naming (install name = JED entry name)
+- Public/package name is **"Ad Board"** — `pkg_adboard.xml` `<name>Ad Board</name>`.
+- Component `COM_ADBOARD` resolves to **"Ad Board"**; plugin `PLG_FINDER_ADBOARD`
+  resolves to **"Smart Search - Ad Board"** (the required `{Type} - {Name}` plugin form).
+- The name carries **no** version number, **no** type prefix (`com_`/`plg_`/`pkg_`…),
+  **no** reserved keyword (module/plugin/component/template/extension/free), and is
+  **ASCII-only** (the earlier "— Full Package" suffix and its em-dash were removed).
+- The JED listing entry must be created as exactly **"Ad Board"**, and the name must be
+  unique across the directory (verify before submitting).
+
+### 15.3 JED Checker rules — status
+- **GPL headers (PH1):** every `.php` file carries an `@license GNU General Public
+  License version 2 or later` docblock, placed after `<?php`, before `namespace`.
+- **`_JEXEC` guard (PH2):** every `.php` file has `\defined('_JEXEC') or die;`.
+- **License tag:** `<license>GNU General Public License version 2 or later</license>` in
+  all three manifests. Use the American spelling `<license>` — that is the Joomla core
+  convention and what the released JED Checker checks. (An unreleased dev build of the
+  checker looks for British `<licence>`; that is a known dev-build quirk, not a real rule.)
+- **XML file references:** all manifest `<file>/<folder>/<language>` targets exist. In
+  particular, install/uninstall SQL and the schema path resolve under `admin/sql/` (see
+  § All SQL lives under `admin/sql/` in CLAUDE.md), not a top-level `sql/` folder.
+- **Language files:** INI values are single double-quoted strings. HTML attributes inside
+  a string use **single quotes** (`<a href='{accountlink}'>`), never nested double
+  quotes, which would truncate the value and fail the `LANG` rule.
+- **No obfuscation / no `error_reporting()`:** no `base64_decode`/`eval`/`gzinflate`
+  and no `error_reporting()` calls in shipped code.
+- **Extension type:** Component + Plugin (a component packaged with a Smart Search /
+  Finder plugin), declared accurately on the JED "Extension includes" field.
+
+### 15.4 Verifying locally
+Install JED Checker into a dev Joomla, then Components → JED Checker → upload the built
+`dist/pkg_adboard_v<version>.zip`. Only red results block a listing; warnings/notices do
+not. There is currently no JED-Checker release built for Joomla 6, so on a Joomla 6 test
+site a patched development build is required (the released 2.4.4 targets Joomla 3/4).
