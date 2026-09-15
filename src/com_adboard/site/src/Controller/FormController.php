@@ -70,7 +70,7 @@ class FormController extends BaseController
         $model = $this->getModel('Form', 'Site');
 
         // 4. Rate limiting
-        $ip = $_SERVER['REMOTE_ADDR'] ?? '';
+        $ip = $this->input->server->getString('REMOTE_ADDR', '');
         if ($model->isRateLimited($ip)) {
             $this->app->enqueueMessage(Text::_('COM_ADBOARD_SUBMIT_RATE_LIMITED'), 'warning');
             $this->setRedirect(Route::_($this->formUrl));

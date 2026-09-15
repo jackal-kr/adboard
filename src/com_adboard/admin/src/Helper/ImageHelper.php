@@ -8,6 +8,8 @@ namespace Joomla\Component\Adboard\Administrator\Helper;
 
 \defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+
 /**
  * Image upload and management helper.
  *
@@ -69,9 +71,9 @@ class ImageHelper
     }
 
     /**
-     * Validate and save uploaded files from $_FILES[$filesKey].
+     * Validate and save uploaded files for the given input key.
      *
-     * @param  string $filesKey      Key in $_FILES ('images' or 'new_images').
+     * @param  string $filesKey      Uploaded-files input key ('images' or 'new_images').
      * @param  int    $maxSlots      Remaining image capacity for this ad.
      * @param  int    $maxSizeMb     Per-file size limit in megabytes.
      * @param  bool   $hadRejections Set to true if any file was skipped.
@@ -83,26 +85,38 @@ class ImageHelper
         int    $maxSizeMb,
         bool   &$hadRejections = false
     ): array {
-        $raw = $_FILES[$filesKey] ?? null;
+        // Pull uploads through Joomla's input layer instead of the raw PHP files
+        // superglobal. Files::get() pivots PHP's per-property arrays into a
+        // per-file list: [['name'=>, 'type'=>, 'tmp_name'=>, 'error'=>, 'size'=>], ...]
+        // so each $raw below is one file's data.
+        $files = Factory::getApplication()->getInput()
+            ->files->get($filesKey, [], 'raw');
 
-        if (!$raw || empty($raw['name']) || !is_array($raw['name']) || $maxSlots < 1) {
+        if (!is_array($files) || $files === [] || $maxSlots < 1) {
             return [];
         }
+
+        // A single-file input arrives as one associative array; normalise to a list.
+        if (isset($files['name'])) {
+            $files = [$files];
+        }
+        $files = array_values($files);
 
         $dir      = self::uploadDir();
         $maxBytes = $maxSizeMb * 1024 * 1024;
         $saved    = [];
-        $limit    = min(count($raw['name']), $maxSlots * 2);
+        $limit    = min(count($files), $maxSlots * 2);
 
         for ($i = 0; $i < $limit && count($saved) < $maxSlots; $i++) {
+            $raw = $files[$i];
 
             // ── Basic checks ──────────────────────────────────────────────
 
-            if (empty($raw['name'][$i]))                                continue;
-            if ((int) $raw['error'][$i]  !== UPLOAD_ERR_OK)            continue;
-            if ((int) $raw['size'][$i]   >   $maxBytes)                { $hadRejections = true; continue; }
+            if (empty($raw['name']))                                continue;
+            if ((int) $raw['error']  !== UPLOAD_ERR_OK)            continue;
+            if ((int) $raw['size']   >   $maxBytes)                { $hadRejections = true; continue; }
 
-            $tmp = $raw['tmp_name'][$i];
+            $tmp = $raw['tmp_name'];
             if (!is_uploaded_file($tmp))                                { $hadRejections = true; continue; }
 
             // ── MIME + extension ──────────────────────────────────────────
@@ -110,7 +124,7 @@ class ImageHelper
             $mime = (new \finfo(\FILEINFO_MIME_TYPE))->file($tmp);
             if (!in_array($mime, self::ALLOWED_MIMES, true))            { $hadRejections = true; continue; }
 
-            $ext = strtolower(pathinfo($raw['name'][$i], PATHINFO_EXTENSION));
+            $ext = strtolower(pathinfo($raw['name'], PATHINFO_EXTENSION));
             if (!in_array($ext, self::MIME_EXT_MAP[$mime] ?? [], true)) { $hadRejections = true; continue; }
 
             // ── Pixel-count pre-check (memory-safe, reads headers only) ──

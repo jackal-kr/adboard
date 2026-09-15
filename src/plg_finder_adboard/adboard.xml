@@ -3,10 +3,11 @@
     <name>PLG_FINDER_ADBOARD</name>
     <author>JOD</author>
     <authorEmail>oleksiy.degtyar@gmail.com</authorEmail>
-    <authorUrl>https://dojazdowdzialki.pl</authorUrl>
+    <authorUrl>https://github.com/jackal-kr/adboard</authorUrl>
     <creationDate>2026-05-30</creationDate>
     <version>1.5.2</version>
-    <license>GNU General Public License version 2 or later</license>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <copyright>Copyright (C) 2026 JOD. All rights reserved.</copyright>
     <description>PLG_FINDER_ADBOARD_XML_DESCRIPTION</description>
     <files>
         <filename plugin="adboard">adboard.php</filename>
@@ -17,5 +18,4 @@
         <language tag="pl-PL">language/pl-PL/plg_finder_adboard.ini</language>
         <language tag="pl-PL">language/pl-PL/plg_finder_adboard.sys.ini</language>
     </languages>
-    <config/>
 </extension>

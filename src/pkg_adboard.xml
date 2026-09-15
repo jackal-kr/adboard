@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="package" method="upgrade">
-    <name>Ad Board</name>
+    <name>AdBoard</name>
     <packagename>adboard</packagename>
     <author>JOD</author>
     <authorEmail>oleksiy.degtyar@gmail.com</authorEmail>
-    <authorUrl>https://dojazdowdzialki.pl</authorUrl>
+    <authorUrl>https://github.com/jackal-kr/adboard</authorUrl>
     <creationDate>2026-05-30</creationDate>
-    <version>1.5.26</version>
-    <license>GNU General Public License version 2 or later</license>
+    <version>1.5.28</version>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <copyright>Copyright (C) 2026 JOD. All rights reserved.</copyright>
     <description>Installs the Ad Board component and its Smart Search (Finder) plugin together.</description>
 
     <files>
@@ -18,6 +19,6 @@
         <file type="plugin" id="adboard" group="finder">plg_finder_adboard.zip</file>
     </files>
     <updateservers>
-        <server type="extension" name="Ad Board Update Site">https://raw.githubusercontent.com/jackal-kr/adboard/main/updates/pkg_adboard.xml</server>
+        <server type="extension" name="AdBoard Update Site">https://raw.githubusercontent.com/jackal-kr/adboard/main/updates/pkg_adboard.xml</server>
     </updateservers>
 </extension>

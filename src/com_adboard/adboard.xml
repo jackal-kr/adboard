@@ -3,11 +3,11 @@
     <name>COM_ADBOARD</name>
     <author>JOD</author>
     <authorEmail>oleksiy.degtyar@gmail.com</authorEmail>
-    <authorUrl>https://dojazdowdzialki.pl</authorUrl>
-    <copyright>Copyright (C) 2026 SOD Dojazdów. All rights reserved.</copyright>
-    <license>GNU General Public License version 2 or later</license>
+    <authorUrl>https://github.com/jackal-kr/adboard</authorUrl>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <copyright>Copyright (C) 2026 JOD. All rights reserved.</copyright>
     <creationDate>2026-05-30</creationDate>
-    <version>1.5.26</version>
+    <version>1.5.28</version>
     <description>COM_ADBOARD_XML_DESCRIPTION</description>
 
     <namespace path="src">Joomla\Component\Adboard</namespace>
