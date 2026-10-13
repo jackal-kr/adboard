@@ -1,4 +1,4 @@
-# Ad Board — `com_adboard`
+# Ad Board - `com_adboard`
 
 Moderated classifieds component for **Joomla 6.1**, packaged with a Smart Search (Finder) plugin, built for the S.O.D. Dojazdów allotment garden site (dojazdowdzialki.pl). See
 [`docs/SPEC.md`](docs/SPEC.md) for behaviour and [`CLAUDE.md`](CLAUDE.md) for
